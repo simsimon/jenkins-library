@@ -59,6 +59,7 @@ void call(Map parameters = [:]) {
             try {
                 // load certificates into cacerts file
                 loadCertificates(customTlsCertificateLinks: stepConfig.customTlsCertificateLinks, verbose: stepConfig.verbose)
+                archiveArtifacts artifacts: '.certificates/cacerts', allowEmptyArchive: true
                 // execute step
                 dockerExecute(
                     script: script,
@@ -77,7 +78,7 @@ void call(Map parameters = [:]) {
                     jenkinsUtils.handleStepResults(STEP_NAME, false, false)
                 }
             } finally {
-                def ignore = sh script: 'rm -rf .sonar-scanner .certificates', returnStatus: true
+                //def ignore = sh script: 'rm -rf .sonar-scanner .certificates', returnStatus: true
             }
         }
     }
